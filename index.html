@@ -108,6 +108,47 @@ footer.ft::before{content:"";flex:none;width:38px;height:38px;background:url(dat
 footer.ft b{display:block;color:var(--ink);font-family:'Plus Jakarta Sans',Figtree,sans-serif;font-size:.9rem}
 @media(max-width:560px){nav{position:static}nav b{flex:1 0 100%}#cs{order:2}nav .row{flex:1 0 100%;justify-content:flex-start}nav .row button.g:first-child{flex:1}.hero{padding:24px 20px}}
 @media print{footer.ft,body::before{display:none!important}}
+/* ---- pruebas: guiado, estados y escena ---- */
+.steps{display:flex;list-style:none;margin:0 0 20px;padding:0;gap:4px}
+.steps li{flex:1;text-align:center;font-size:.68rem;font-weight:700;color:var(--mu);position:relative;padding-top:28px;letter-spacing:.02em;transition:color .3s}
+.steps li::before{content:attr(data-n);position:absolute;left:50%;top:0;margin-left:-12px;width:24px;height:24px;border-radius:50%;background:var(--ln);color:var(--mu);display:flex;align-items:center;justify-content:center;font-size:.74rem;z-index:1;transition:background .4s,color .4s,transform .4s}
+.steps li::after{content:"";position:absolute;top:11px;left:calc(50% + 15px);right:calc(-50% + 15px);height:2px;background:var(--ln);border-radius:2px}
+.steps li:last-child::after{display:none}
+.steps li.done::before{background:var(--bl2);color:var(--bt);content:"\2713"}
+.steps li.done::after{background:var(--bl2)}
+.steps li.on{color:var(--ink)}
+.steps li.on::before{background:var(--bl2);color:var(--bt);transform:scale(1.18);animation:ping2 1.8s infinite}
+@keyframes ping2{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--ac) 70%,transparent)}80%,100%{box-shadow:0 0 0 10px transparent}}
+.wz h2{font-size:1.75rem}
+.wz .info{font-size:1.02rem;border-left-width:6px}
+.wz input,.wz select{font-size:1.05rem;padding:13px 14px}
+.wz .card ul{list-style:none;padding:0;margin:12px 0}
+.wz .card li{position:relative;padding-left:32px;margin:11px 0}
+.wz .card li::before{content:"";position:absolute;left:0;top:.18em;width:20px;height:20px;border-radius:50%;background:radial-gradient(circle,var(--bl2) 36%,var(--bu) 40%)}
+.card.lead{border:2px solid var(--ac);padding-top:32px;background:linear-gradient(180deg,color-mix(in srgb,var(--bu) 60%,var(--s)),var(--s) 60%);box-shadow:0 0 0 6px color-mix(in srgb,var(--ac) 16%,transparent),var(--shh);animation:leadin .7s cubic-bezier(.2,1.2,.4,1) backwards}
+@keyframes leadin{from{opacity:0;transform:translateY(16px) scale(.97)}to{opacity:1;transform:none}}
+.card.lead::before{content:"Lee esto primero";position:absolute;left:18px;top:-14px;background:linear-gradient(90deg,var(--bl),var(--bl2));color:var(--bt);font:800 .72rem 'Plus Jakarta Sans',Figtree,sans-serif;letter-spacing:.08em;text-transform:uppercase;padding:6px 14px;border-radius:99px;box-shadow:0 8px 16px -6px rgba(47,122,14,.65);animation:tagp 2.4s ease-in-out 1s infinite}
+@keyframes tagp{0%,100%{transform:none}50%{transform:translateY(-3px)}}
+.card.lead p,.card.lead li{font-size:1.1rem;line-height:1.6}
+.card.lead b{background:linear-gradient(transparent 58%,color-mix(in srgb,var(--ac) 55%,transparent) 58%);padding:0 3px;border-radius:3px}
+.card.lead svg{vertical-align:middle;filter:drop-shadow(0 4px 8px rgba(0,0,0,.25))}
+.wz .row button:not(.g){font-size:1.08rem;padding:14px 28px;animation:cta 2.2s ease-in-out infinite}
+@keyframes cta{0%,100%{box-shadow:0 1px 0 rgba(255,255,255,.25) inset,0 6px 14px -6px rgba(47,122,14,.55),0 0 0 0 color-mix(in srgb,var(--ac) 0%,transparent)}50%{box-shadow:0 1px 0 rgba(255,255,255,.25) inset,0 14px 24px -8px rgba(47,122,14,.6),0 0 0 9px color-mix(in srgb,var(--ac) 28%,transparent)}}
+.win h2{display:flex;align-items:center;gap:12px}
+.win h2::before{content:"\2713";flex:none;width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.5rem;color:var(--bt);background:linear-gradient(135deg,var(--bl2),var(--ac));box-shadow:0 10px 22px -8px rgba(47,122,14,.7);animation:pop .7s cubic-bezier(.2,1.6,.4,1)}
+@keyframes pop{0%{transform:scale(0) rotate(-40deg)}100%{transform:none}}
+.win .info{background:linear-gradient(135deg,#124004,#2F7A0E);color:#fff;border:0;border-radius:18px;padding:18px 20px;font-size:1.05rem;box-shadow:0 18px 34px -18px rgba(18,64,4,.7)}
+#stage{background:radial-gradient(ellipse at 50% 38%,#12301f 0,#07130D 74%)!important}
+#shape.go{box-shadow:0 0 70px rgba(59,130,246,.45)}#shape.no{box-shadow:0 0 70px rgba(249,115,22,.4)}#shape.pv{box-shadow:0 0 70px rgba(250,204,21,.4)}
+#msg{color:#A9D3B7!important;font-weight:600;letter-spacing:.02em}
+#word{text-shadow:0 6px 30px rgba(0,0,0,.55)}
+#sbtn button{background:linear-gradient(180deg,#17402a,#0f2c1c)!important;border:2px solid #2f7a4a!important;color:#E9F5DF;font-size:1.05rem;border-radius:14px;box-shadow:none}
+#sbtn button:hover:not(:disabled){background:linear-gradient(180deg,#1d5236,#133823);transform:none}
+#sbtn button:active{transform:scale(.95);background:#1f5a38}
+#cdn{position:absolute;left:50%;top:50%;width:150px;height:150px;margin:-75px 0 0 -75px;display:none;align-items:center;justify-content:center;font:800 5.2rem 'Plus Jakarta Sans',Figtree,sans-serif;color:#E9F5DF;border-radius:50%;border:4px solid rgba(124,200,58,.65);background:rgba(124,200,58,.08);box-shadow:0 0 60px rgba(124,200,58,.25)}
+#cdn.on{display:flex;animation:cdp .8s ease-out}
+@keyframes cdp{0%{transform:scale(.6);opacity:0}25%{transform:scale(1.08);opacity:1}100%{transform:scale(1);opacity:1}}
+@media(max-width:560px){.steps li{font-size:.6rem}.wz h2{font-size:1.45rem}}
 #stage{position:fixed;inset:0;background:#0B1220;display:none;z-index:50;touch-action:manipulation;user-select:none;-webkit-user-select:none}
 #shape{position:absolute;left:50%;top:50%;width:110px;height:110px;margin:-55px 0 0 -55px;display:none}
 #shape.go{background:#3B82F6;border-radius:50%}#shape.no{background:#F97316;border-radius:6px}#shape.pv{background:#FACC15;border-radius:50%}
@@ -124,7 +165,7 @@ footer.ft b{display:block;color:var(--ink);font-family:'Plus Jakarta Sans',Figtr
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 @media print{nav,.row,.noprint{display:none!important}body{background:#fff;color:#000}.card{break-inside:avoid}}
 </style></head><body>
-<main><nav><b>Laboratorio de Atención</b><span id="cs" class="mu"></span><span class="row" style="margin:0"><button class="g" id="bk" onclick="uiBack()" aria-label="Volver a la pantalla anterior" disabled>← Atrás</button><button class="g" onclick="home()">Inicio</button><button class="g" onclick="rep()">Informe</button><button class="g ic" id="snd" onclick="uiToggle()" aria-label="Sonidos suaves de la interfaz" aria-pressed="true" title="Sonidos suaves"></button></span></nav><div id="app"></div></main>
+<main><nav><b>Laboratorio de Atención</b><span id="cs" class="mu"></span><span class="row" style="margin:0"><button class="g" id="bk" onclick="uiBack()" aria-label="Volver a la pantalla anterior" disabled>← Atrás</button><button class="g" onclick="home()">Inicio</button><button class="g" onclick="rep()">Informe</button><button class="g ic" id="uisnd" onclick="uiToggle()" aria-label="Sonidos suaves de la interfaz" aria-pressed="true" title="Sonidos suaves"></button></span></nav><div id="app"></div></main>
 <footer class="ft noprint"><div><b>Laboratorio de Atención</b>Proyecto académico de procesos cognitivos. Herramienta de autoconocimiento y seguimiento: no evalúa ni diagnostica TDAH ni ningún trastorno.</div></footer>
 <div id="stage"><div id="shape"></div><div id="word"></div><div id="sbtn"></div><div id="msg"></div></div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
@@ -280,15 +321,21 @@ nb:{n1:{m:NM(nT(1,.9-pen*.005,.06,520),1,false)},n2:{m:NM(nT(2,.7-pen*.012,.12+p
 s.valid=gOk(s).filter(Boolean).length>=4;return s});
 DFOC={dim:'sost',t:out[9].id-1};DTRN=[0,2,4,6].map(j=>({t:out[9].id+j*864e5,dim:'sost'}));return out}
 //#LOGIC-END
+const STEPS=['Preparar','Go/No-Go','Stroop','N-Back','CPT','Reacción'];
+function decorate(){try{const h=app.querySelector('h2'),t=h?h.textContent:'';let i=-1;
+if(/^(Antes de empezar|Tu contexto de hoy|Cómo funciona)/.test(t))i=0;else if(/^(Go\/No-Go|Parte \d)/.test(t))i=1;else if(/^Stroop/.test(t))i=2;else if(/^N-Back/.test(t))i=3;else if(/^CPT/.test(t))i=4;else if(/^Reaction/.test(t))i=5;else if(/^Resultado de esta sesión/.test(t))i=6;
+app.classList.toggle('wz',i>=0&&i<6);app.classList.toggle('win',i===6);if(i<0||!h)return;
+const ol=document.createElement('ol');ol.className='steps';ol.setAttribute('aria-label','Progreso de la sesión');ol.innerHTML=STEPS.map((s,k)=>`<li data-n="${k+1}" class="${k<i||i===6?'done':k===i?'on':''}"${k===i?' aria-current="step"':''}>${s}</li>`).join('');app.insertBefore(ol,app.firstChild);
+if(i<6&&!/Tu contexto|Parte \d+ terminada/.test(t)){const c=app.querySelector('.card');if(c)c.classList.add('lead')}}catch(e){}}
 const $=s=>document.querySelector(s),app=$('#app'),stage=$('#stage'),shape=$('#shape'),msg=$('#msg'),wait=ms=>new Promise(r=>setTimeout(r,ms));
-const go=h=>{app.innerHTML=h;scrollTo(0,0);app.classList.remove('fi');void app.offsetWidth;app.classList.add('fi');setTimeout(()=>{app.querySelectorAll('[data-w]').forEach(e=>{e.style.width=e.dataset.w+'%'});app.querySelectorAll('[data-o]').forEach(e=>{e.style.strokeDashoffset=e.dataset.o})},80)};
+const go=h=>{app.innerHTML=h;decorate();scrollTo(0,0);app.classList.remove('fi');void app.offsetWidth;app.classList.add('fi');setTimeout(()=>{app.querySelectorAll('[data-w]').forEach(e=>{e.style.width=e.dataset.w+'%'});app.querySelectorAll('[data-o]').forEach(e=>{e.style.strokeDashoffset=e.dataset.o})},80)};
 let S={},ac=null,sound=true,hidden=false,cur=null,run=false,early=0,tmr=null;
 
 let uiOn=LS('la_ui',true),uiAc=null;
 function uiTone(f,d,v){try{if(!uiOn)return;const A=window.AudioContext||window.webkitAudioContext;if(!A)return;uiAc=uiAc||new A();const o=uiAc.createOscillator(),g=uiAc.createGain(),n=uiAc.currentTime;o.type='sine';o.frequency.setValueAtTime(f,n);o.frequency.exponentialRampToValueAtTime(f*1.35,n+d);g.gain.setValueAtTime(.0001,n);g.gain.exponentialRampToValueAtTime(v,n+.012);g.gain.exponentialRampToValueAtTime(.0001,n+d);o.connect(g);g.connect(uiAc.destination);o.start(n);o.stop(n+d+.03)}catch(e){}}
-function uiPaint(){try{const b=document.querySelector('#snd');if(b){b.classList.toggle('off',!uiOn);b.setAttribute('aria-pressed',String(uiOn))}}catch(e){}}
+function uiPaint(){try{const b=document.querySelector('#uisnd');if(b){b.classList.toggle('off',!uiOn);b.setAttribute('aria-pressed',String(uiOn))}}catch(e){}}
 function uiToggle(){uiOn=!uiOn;SV('la_ui',uiOn);uiPaint();uiTone(720,.14,.04)}
-document.addEventListener('click',e=>{try{const b=e.target.closest&&e.target.closest('button');if(!b||b.disabled||b.id==='snd'||b.closest('#stage')||run)return;uiTone(b.classList.contains('g')?500:640,.09,.03)}catch(x){}},true);
+document.addEventListener('click',e=>{try{const b=e.target.closest&&e.target.closest('button');if(!b||b.disabled||b.id==='uisnd'||b.closest('#stage')||run)return;uiTone(b.classList.contains('g')?500:640,.09,.03)}catch(x){}},true);
 uiPaint();
 document.addEventListener('visibilitychange',()=>{if(document.hidden)hidden=true});
 const CH={ok:'Respondida',pg:'En progreso',no:'Sin datos'};
@@ -341,7 +388,8 @@ async function distr(){const AP=[['WHATSAPP','#25D366','💬',['Mensaje','Ana: �
 while(run){await wait(900+Math.random()*1100);if(!run)break;const a=AP[Math.floor(Math.random()*AP.length)],d=document.createElement('div');d.className='ntf';
 d.innerHTML='<i style="background:'+a[1]+'">'+a[2]+'</i><div><b>'+a[0]+'</b><span>ahora</span><p>'+a[3][Math.floor(Math.random()*a[3].length)]+'</p></div>';d.style.top='calc(env(safe-area-inset-top,0px) + '+(8+Math.floor(Math.random()*3)*74)+'px)';
 stage.appendChild(d);stage.classList.add('fl');beep();try{navigator.vibrate&&navigator.vibrate([120,60,120])}catch(e){}setTimeout(()=>stage.classList.remove('fl'),260);setTimeout(()=>d.remove(),2300)}}
-async function countdown(){stage.style.display='block';for(const n of [3,2,1]){msg.textContent='Prepárate… '+n;await wait(800)}msg.textContent=''}
+function cdnEl(){let c=document.querySelector('#cdn');if(!c){c=document.createElement('div');c.id='cdn';c.setAttribute('aria-hidden','true');stage.appendChild(c)}return c}
+async function countdown(){stage.style.display='block';const c=cdnEl();for(const n of [3,2,1]){msg.textContent='Prepárate… '+n;c.textContent=n;c.className='';void c.offsetWidth;c.className='on';await wait(800)}msg.textContent='';c.className='';c.textContent=''}
 async function block(mode,nG,nN){const tr=[];await countdown();run=true;if(mode==='dist')distr();
 for(const type of seq(nG,nN)){await wait(300+Math.random()*300);cur={type,resp:null,on:0};
 await new Promise(res=>requestAnimationFrame(()=>{cur.on=performance.now();shape.className=type;shape.style.display='block';res()}));
@@ -363,9 +411,9 @@ w.textContent='';await wait(500);w.textContent=word;w.style.color=COL[ink];const
 const ans=await new Promise(res=>{const to=setTimeout(()=>{b.onpointerdown=null;res(null)},3000);b.onpointerdown=e=>{const c=e.target.dataset&&e.target.dataset.c;if(!c)return;clearTimeout(to);b.onpointerdown=null;res({c,rt:performance.now()-t0})}});
 tr.push({con,ok:!!ans&&ans.c===ink,rt:ans?ans.rt:null})}
 w.style.display='none';b.style.display='none';stage.style.display='none';S.st={m:SM(tr,hidden)};nbIntro(1)}
-function nbIntro(n){go(`<h2>N-Back: memoria de trabajo (${n}-back)</h2><div class="card"><p>Verás letras una a una. <b>Toca la pantalla cuando la letra sea igual a la de ${n===1?'justo antes (1 atrás)':'dos letras antes (2 atrás)'}.</b> Si no coincide, no toques.</p><p>Ejemplo: ${n===1?'B, K, K → toca en la segunda K.':'B, K, B → toca en la segunda B.'}</p><p class="mu">${S.quick?10:18} letras, ${S.quick?'unos 15':'unos 25'} segundos.${n===2?' El 2-back es más difícil; es normal equivocarse.':''}</p></div><div class="row"><button onclick="nbGo(${n})">Empezar</button></div>`)}
+function nbIntro(n){go(`<h2>N-Back: memoria de trabajo (${n}-back)</h2><div class="card"><p>Verás letras una a una. <b>Toca la pantalla cuando la letra sea igual a la de ${n===1?'justo antes (1 atrás)':'dos letras antes (2 atrás)'}.</b> Si no coincide, no toques.</p><p>Ejemplo: ${n===1?'B, K, K → toca en la segunda K.':'B, K, B → toca en la segunda B.'}</p><p class="mu">${S.quick?10:18} letras, ${S.quick?'unos 16':'unos 30'} segundos.${n===2?' El 2-back es más difícil; es normal equivocarse.':''}</p></div><div class="row"><button onclick="nbGo(${n})">Empezar</button></div>`)}
 async function nbGo(n){const w=$('#word'),N=S.quick?10:18,q=nbSeq(n,N),tr=[];await countdown();w.style.color='#E8EEF7';
-for(let i=0;i<N;i++){cur={resp:null,on:0};await new Promise(res=>requestAnimationFrame(()=>{cur.on=performance.now();w.textContent=q.seq[i];w.style.display='block';res()}));await wait(450);w.style.display='none';await wait(850);tr.push({scored:i>=n,tgt:q.tg.has(i),resp:i>=n&&cur.resp!=null,rt:cur.resp!=null?cur.resp-cur.on:null});cur=null}
+for(let i=0;i<N;i++){cur={resp:null,on:0};await new Promise(res=>requestAnimationFrame(()=>{cur.on=performance.now();w.textContent=q.seq[i];w.style.display='block';res()}));await wait(600);w.style.display='none';await wait(1000);tr.push({scored:i>=n,tgt:q.tg.has(i),resp:i>=n&&cur.resp!=null,rt:cur.resp!=null?cur.resp-cur.on:null});cur=null}
 stage.style.display='none';S.nb['n'+n]={m:NM(tr,n,hidden)};n===1?nbIntro(2):cptIntro()}
 function cptIntro(){go(`<h2>CPT: atención sostenida</h2><div class="card"><p>Aparecerán letras muy rápido, una tras otra. <b>Toca la pantalla solo cuando aparezca la X.</b> Con cualquier otra letra, no toques.</p><p class="mu">Son tres bloques seguidos, sin pausa (${S.quick?'unos 25':'unos 50'} segundos). Mantén la atención hasta el final.</p></div><div class="row"><button onclick="cptGo()">Empezar</button></div>`)}
 async function cptGo(){const w=$('#word'),per=S.quick?8:16,L='ACEHKMPRTUZ',tr=[];await countdown();w.style.color='#E8EEF7';
