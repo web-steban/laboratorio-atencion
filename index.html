@@ -861,8 +861,11 @@ let S={},ac=null,sound=true,hidden=false,cur=null,run=false,early=0,tmr=null;
 let uiOn=LS('la_ui',true),uiAc=null;
 function uiTone(f,d,v){try{if(!uiOn)return;const A=window.AudioContext||window.webkitAudioContext;if(!A)return;uiAc=uiAc||new A();const o=uiAc.createOscillator(),g=uiAc.createGain(),n=uiAc.currentTime;o.type='sine';o.frequency.setValueAtTime(f,n);o.frequency.exponentialRampToValueAtTime(f*1.35,n+d);g.gain.setValueAtTime(.0001,n);g.gain.exponentialRampToValueAtTime(v,n+.012);g.gain.exponentialRampToValueAtTime(.0001,n+d);o.connect(g);g.connect(uiAc.destination);o.start(n);o.stop(n+d+.03)}catch(e){}}
 function uiPaint(){try{const b=document.querySelector('#uisnd');if(b){b.classList.toggle('off',!uiOn);b.setAttribute('aria-pressed',String(uiOn))}}catch(e){}}
-function uiToggle(){uiOn=!uiOn;SV('la_ui',uiOn);uiPaint();uiTone(720,.16,.12)}
-document.addEventListener('click',e=>{try{const b=e.target.closest&&e.target.closest('button');if(!b||b.disabled||b.id==='uisnd'||b.closest('#stage')||run)return;uiTone(b.classList.contains('g')?500:640,.11,.10)}catch(x){}},true);
+let hapEl=null;
+function hapTick(){try{if(!hapEl){const l=document.createElement('label');l.setAttribute('aria-hidden','true');l.style.cssText='position:fixed;left:-9999px;top:0;width:1px;height:1px;opacity:0;pointer-events:none';const i=document.createElement('input');i.type='checkbox';i.setAttribute('switch','');l.appendChild(i);document.body.appendChild(l);hapEl=l}hapEl.click()}catch(e){}}
+function vib(ms){try{if(navigator.vibrate){navigator.vibrate(ms);return}hapTick();if(ms>30)setTimeout(hapTick,55)}catch(e){}}
+function uiToggle(){uiOn=!uiOn;SV('la_ui',uiOn);uiPaint();uiTone(720,.16,.18)}
+document.addEventListener('click',e=>{try{const b=e.target.closest&&e.target.closest('button');if(!b||b.disabled||b.id==='uisnd'||b.closest('#stage')||run)return;vib(12);uiTone(b.classList.contains('g')?500:640,.11,.16)}catch(x){}},true);
 uiPaint();
 document.addEventListener('visibilitychange',()=>{if(document.hidden)hidden=true});
 const CH={ok:'Respondida',pg:'En progreso',no:'Sin datos'};
@@ -908,7 +911,7 @@ go(`<h2>Cómo funciona</h2><div class="card"><p>La sesión tiene cinco juegos co
 <p><svg width="34" height="34" viewBox="0 0 34 34" aria-hidden="true"><rect x="3" y="3" width="28" height="28" rx="3" fill="#F97316"/></svg> <b>Cuadrado naranja: no toques.</b></p>
 <p>Responde rápido, pero sin equivocarte. Primero haremos 8 figuras de práctica.</p></div><div class="row"><button onclick="practice()">Empezar práctica</button></div>`)}
 function seq(nG,nN){let a;do{a=[...Array(nG).fill('go'),...Array(nN).fill('no')];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}let k=0,ok=true;for(const t of a){k=t==='no'?k+1:0;if(k>3){ok=false;break}}if(ok&&a[0]==='go'&&a[1]==='go')return a}while(1)}
-stage.addEventListener('pointerdown',e=>{if(e.target.closest&&e.target.closest('#sbtn'))return;e.preventDefault();const t=performance.now();if(cur&&cur.active!==false){if(cur.resp==null)cur.resp=t}else early++});
+stage.addEventListener('pointerdown',e=>{if(e.target.closest&&e.target.closest('#sbtn'))return;e.preventDefault();const t=performance.now();vib(70);if(cur&&cur.active!==false){if(cur.resp==null)cur.resp=t}else early++});
 function callTone(){if(!sound||!ac)return;try{[0,.55].forEach(d=>[440,480].forEach(fr=>{const o=ac.createOscillator(),g=ac.createGain(),t=ac.currentTime+d;o.type='sine';o.frequency.value=fr;g.gain.setValueAtTime(.001,t);g.gain.linearRampToValueAtTime(.12,t+.03);g.gain.setValueAtTime(.12,t+.4);g.gain.linearRampToValueAtTime(.001,t+.45);o.connect(g);g.connect(ac.destination);o.start(t);o.stop(t+.46)}))}catch(e){}}
 function beep(){if(!sound||!ac)return;callTone();try{[[988,0],[740,.13],[988,.26]].forEach(p=>{const o=ac.createOscillator(),g=ac.createGain(),t=ac.currentTime+p[1];o.type='square';o.frequency.value=p[0];g.gain.setValueAtTime(.3,t);g.gain.exponentialRampToValueAtTime(.001,t+.12);o.connect(g);g.connect(ac.destination);o.start(t);o.stop(t+.13)})}catch(e){}}
 async function distr(){const AP=[['WHATSAPP','#25D366','💬',['Mensaje','Ana: ¿ya viste lo de mañana?','Mamá: llámame cuando puedas','Grupo: 12 mensajes nuevos']],['INSTAGRAM','#D6249F','📷',['juan_23 le gustó tu foto','Tienes 5 solicitudes nuevas']],['MENSAJES','#34C759','✉️',['Código de verificación: 482915','Banco: compra aprobada']],['TELÉFONO','#0A84FF','📞',['Llamada perdida','Buzón de voz nuevo']]];
@@ -935,7 +938,7 @@ await countdown();w.style.display='block';b.style.display='flex';
 const list=[],NW=S.quick?8:18;for(let i=0;i<NW;i++)list.push(i<NW/2);for(let i=list.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[list[i],list[j]]=[list[j],list[i]]}
 for(const con of list){const word=names[Math.floor(Math.random()*3)];let ink=word;if(!con){const o=names.filter(x=>x!==word);ink=o[Math.floor(Math.random()*2)]}
 w.textContent='';await wait(500);w.textContent=word;w.style.color=COL[ink];const t0=performance.now();
-const ans=await new Promise(res=>{const to=setTimeout(()=>{b.onpointerdown=null;res(null)},3000);b.onpointerdown=e=>{const c=e.target.dataset&&e.target.dataset.c;if(!c)return;clearTimeout(to);b.onpointerdown=null;res({c,rt:performance.now()-t0})}});
+const ans=await new Promise(res=>{const to=setTimeout(()=>{b.onpointerdown=null;res(null)},3000);b.onpointerdown=e=>{const c=e.target.dataset&&e.target.dataset.c;if(!c)return;vib(70);clearTimeout(to);b.onpointerdown=null;res({c,rt:performance.now()-t0})}});
 tr.push({con,ok:!!ans&&ans.c===ink,rt:ans?ans.rt:null})}
 w.style.display='none';b.style.display='none';stage.style.display='none';S.st={m:SM(tr,hidden)};nbIntro(1)}
 function nbIntro(n){go(`<h2>N-Back: memoria de trabajo (${n}-back)</h2><div class="card"><p>Verás letras una a una. <b>Toca la pantalla cuando la letra sea igual a la de ${n===1?'justo antes (1 atrás)':'dos letras antes (2 atrás)'}.</b> Si no coincide, no toques.</p><p>Ejemplo: ${n===1?'B, K, K → toca en la segunda K.':'B, K, B → toca en la segunda B.'}</p><p class="mu">${S.quick?10:18} letras, ${S.quick?'unos 16':'unos 30'} segundos.${n===2?' El 2-back es más difícil; es normal equivocarse.':''}</p></div><div class="row"><button onclick="nbGo(${n})">Empezar</button></div>`)}
