@@ -861,8 +861,8 @@ let S={},ac=null,sound=true,hidden=false,cur=null,run=false,early=0,tmr=null;
 let uiOn=LS('la_ui',true),uiAc=null;
 function uiTone(f,d,v){try{if(!uiOn)return;const A=window.AudioContext||window.webkitAudioContext;if(!A)return;uiAc=uiAc||new A();const o=uiAc.createOscillator(),g=uiAc.createGain(),n=uiAc.currentTime;o.type='sine';o.frequency.setValueAtTime(f,n);o.frequency.exponentialRampToValueAtTime(f*1.35,n+d);g.gain.setValueAtTime(.0001,n);g.gain.exponentialRampToValueAtTime(v,n+.012);g.gain.exponentialRampToValueAtTime(.0001,n+d);o.connect(g);g.connect(uiAc.destination);o.start(n);o.stop(n+d+.03)}catch(e){}}
 function uiPaint(){try{const b=document.querySelector('#uisnd');if(b){b.classList.toggle('off',!uiOn);b.setAttribute('aria-pressed',String(uiOn))}}catch(e){}}
-function uiToggle(){uiOn=!uiOn;SV('la_ui',uiOn);uiPaint();uiTone(720,.14,.04)}
-document.addEventListener('click',e=>{try{const b=e.target.closest&&e.target.closest('button');if(!b||b.disabled||b.id==='uisnd'||b.closest('#stage')||run)return;uiTone(b.classList.contains('g')?500:640,.09,.03)}catch(x){}},true);
+function uiToggle(){uiOn=!uiOn;SV('la_ui',uiOn);uiPaint();uiTone(720,.16,.12)}
+document.addEventListener('click',e=>{try{const b=e.target.closest&&e.target.closest('button');if(!b||b.disabled||b.id==='uisnd'||b.closest('#stage')||run)return;uiTone(b.classList.contains('g')?500:640,.11,.10)}catch(x){}},true);
 uiPaint();
 document.addEventListener('visibilitychange',()=>{if(document.hidden)hidden=true});
 const CH={ok:'Respondida',pg:'En progreso',no:'Sin datos'};
